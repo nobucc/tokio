@@ -37,9 +37,9 @@ where
     F: FnOnce(&mut BlockingRegionGuard) -> R,
 {
     let maybe_guard = CONTEXT.with(|c| {
-        if c.runtime.get().is_entered() {
-            None
-        } else {
+        // if c.runtime.get().is_entered() {
+        //     None
+        // } else {
             // Set the entered flag
             c.runtime.set(EnterRuntime::Entered {
                 allow_block_in_place,
@@ -58,7 +58,7 @@ where
                 handle: c.set_current(handle),
                 old_seed,
             })
-        }
+        // }
     });
 
     if let Some(mut guard) = maybe_guard {
